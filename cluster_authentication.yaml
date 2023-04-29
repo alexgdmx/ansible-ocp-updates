@@ -1,0 +1,25 @@
+---
+- name: Get available updates in OpenShift cluster
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Authenticate to the Kubernetes API
+      k8s_auth:
+        host: https://api.example.com
+        username: myuser
+        password: mypassword
+      register: auth_result
+
+    - name: Get available updates
+      k8s_info:
+        kind: ClusterVersion
+        api_version: config.openshift.io/v1
+        namespace: openshift-config
+        auth:
+          bearer_token: "{{ auth_result.token }}"
+      register: available_updates
+
+    - name: Display available updates
+      debug:
+        msg: "Available updates: {{ available_updates.resources[0].spec.versions[-1] }}"
