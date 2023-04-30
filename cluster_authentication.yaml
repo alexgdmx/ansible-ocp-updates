@@ -6,20 +6,36 @@
   tasks:
     - name: Authenticate to the Kubernetes API
       k8s_auth:
-        host: https://api.example.com
-        username: myuser
-        password: mypassword
+        host: https://api.fiserv.openshift.training:6443
+        username: alex
+        password: Pass123!
+        validate_certs: no
       register: auth_result
 
-    - name: Get available updates
+    - name: debug result
+      debug:
+        msg: "{{ auth_result  }}"
+      
+    - name: Get available updates token
       k8s_info:
         kind: ClusterVersion
         api_version: config.openshift.io/v1
         namespace: openshift-config
         auth:
-          bearer_token: "{{ auth_result.token }}"
+          bearer_token: "{{ auth_result.openshift_auth.token }}"
       register: available_updates
+      when: auth_result.openshift_auth.token is defined
+
+    - name: Get available updates api_key
+      k8s_info:
+        kind: ClusterVersion
+        api_version: config.openshift.io/v1
+        namespace: openshift-config
+        api_key: "{{ auth_result.openshift_auth.api_key }}"
+      register: available_updates
+      when: auth_result.openshift_auth.api_key is defined
+     
 
     - name: Display available updates
       debug:
-        msg: "Available updates: {{ available_updates.resources[0].spec.versions[-1] }}"
+        msg: "{{ available_updates }}"

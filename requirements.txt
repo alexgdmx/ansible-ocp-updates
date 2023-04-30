@@ -1,0 +1,7 @@
+pip
+requests
+requests-oauthlib
+ansible
+ansible-navigator
+kubernetes
+jmespath
