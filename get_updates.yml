@@ -1,0 +1,12 @@
+---
+- name: Get available updates in OpenShift cluster
+  hosts: openshift_master
+  tasks:
+    - name: Get available updates
+      shell: |
+        oc get clusterversion -o jsonpath='{range .items[?(.metadata.deletionTimestamp=="")].spec.versions[*]}{.version}{"\n"}{end}' | sort -V | tail -n 1
+      register: available_updates
+
+    - name: Display available updates
+      debug:
+        msg: "Available updates: {{ available_updates.stdout }}"
