@@ -37,6 +37,6 @@
     #    msg: "{{ upgrade_versions }}
 
 
-    - name: debug
-      debug:
-        msg: "{{ versions }}"
+  - name: debug
+    debug:
+      msg: "{{ versions }}"
