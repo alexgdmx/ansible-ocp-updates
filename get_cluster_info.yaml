@@ -7,14 +7,14 @@
   - name: Get Cluster information
     kubernetes.core.k8s_cluster_info:
       host: https://api.fiserv.openshift.training:6443
-      kubeconfig: /home/alex/ansible/ansible-ocp-updates/kubeconfig
+      kubeconfig: kubeconfig
       validate_certs: no
     register: api_status
  
   - name: Get an existing Service object
     kubernetes.core.k8s_info:
       api_version: config.openshift.io/v1
-      kubeconfig: /home/alex/ansible/ansible-ocp-updates/kubeconfig
+      kubeconfig: kubeconfig
       kind: ClusterVersion
       name: version
       validate_certs: no

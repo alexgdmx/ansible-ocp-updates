@@ -1,62 +1,40 @@
 ---
 - name: Apply updates to OpenShift cluster
-  hosts: openshift_master
-  tasks:
-    - name: Get available updates
-      shell: |
-        oc get clusterversion -o jsonpath='{range .items[?(.metadata.deletionTimestamp=="")].spec.versions[*]}{.version}{"\n"}{end}' | sort -V | tail -n 1
-      register: available_updates
-
-    - name: Apply updates
-      shell: |
-        oc adm upgrade --to={{ available_updates.stdout }}
-      register: upgrade_output
-
-    - name: Display upgrade output
-      debug:
-        msg: "{{ upgrade_output.stdout_lines }}"
-
-
-
-
-
----
-- name: Apply updates to OpenShift cluster
   hosts: localhost
   connection: local
   gather_facts: false
   tasks:
-    - name: Authenticate to the Kubernetes API
-      k8s_auth:
-        host: https://api.example.com
-        username: myuser
-        password: mypassword
-      register: auth_result
+  - name: Get an existing Service object
+    kubernetes.core.k8s_info:
+      api_version: config.openshift.io/v1
+      kubeconfig: kubeconfig
+      kind: ClusterVersion
+      name: version
+      validate_certs: no
+    register: versions
 
-    - name: Get available updates
-      k8s_info:
-        kind: ClusterVersion
-        api_version: config.openshift.io/v1
-        namespace: openshift-config
-        auth:
-          bearer_token: "{{ auth_result.token }}"
-      register: available_updates
+    #  - name: Apply updates
+    #  k8s:
+    #    state: present
+    #    definition:
+    #      apiVersion: config.openshift.io/v1
+    #      kind: ClusterVersion
+    #      metadata:
+    #        name: version
+    #      spec:
+    #        desiredUpdate:
+    #          version: "{{ available_updates.resources[0].spec.versions[-1] }}"
+    #      auth:
+    #        bearer_token: "{{ auth_result.token }}"
+    #  register: upgrade_output
 
-    - name: Apply updates
-      k8s:
-        state: present
-        definition:
-          apiVersion: config.openshift.io/v1
-          kind: ClusterVersion
-          metadata:
-            name: version
-          spec:
-            desiredUpdate:
-              version: "{{ available_updates.resources[0].spec.versions[-1] }}"
-          auth:
-            bearer_token: "{{ auth_result.token }}"
-      register: upgrade_output
-
-    - name: Display upgrade output
+    - name: Display cluster_name
       debug:
-        msg: "{{ upgrade_output }}"
+        msg: "{{ cluster_name }}"
+
+    - name: Display upgrade_versions
+      debug:
+        msg: "{{ upgrade_versions }}
+
+
+
