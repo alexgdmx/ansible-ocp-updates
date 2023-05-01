@@ -1,0 +1,30 @@
+---
+- name: Get available updates in OpenShift cluster
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+  - name: Get Cluster information
+    kubernetes.core.k8s_cluster_info:
+      host: https://api.fiserv.openshift.training:6443
+      kubeconfig: kubeconfig
+      validate_certs: no
+    register: api_status
+ 
+  - name: Get an existing Service object
+    kubernetes.core.k8s_info:
+      api_version: config.openshift.io/v1
+      kubeconfig: kubeconfig
+      kind: ClusterVersion
+      name: version
+      validate_certs: no
+    register: versions
+
+  - name: setting versions variable
+    ansible.builtin.set_fact:
+      upgrade_versions: "{{ versions.resources[0] | community.general.json_query('status.availableUpdates[*].version') }}"
+      cacheable: yes
+
+  - name: show versions
+    debug:
+      msg: "{{ upgrade_versions }}" 
