@@ -28,9 +28,9 @@
     #        bearer_token: "{{ auth_result.token }}"
     #  register: upgrade_output
 
-    - name: Display cluster_name
-      debug:
-        msg: "{{ cluster_name }}"
+    #- name: Display cluster_name
+    #  debug:
+    #    msg: "{{ cluster_name }}"
 
     - name: Display upgrade_versions
       debug:
