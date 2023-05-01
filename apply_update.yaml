@@ -32,9 +32,9 @@
       debug:
         msg: "{{ cluster_name }}"
 
-    - name: Display upgrade_versions
-      debug:
-        msg: "{{ upgrade_versions }}
+    #- name: Display upgrade_versions
+    #  debug:
+    #    msg: "{{ upgrade_versions }}
 
 
 
