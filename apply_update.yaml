@@ -2,16 +2,17 @@
 - name: Apply updates to OpenShift cluster
   hosts: localhost
   connection: local
-  gather_facts: false
+  gather_facts: true
+
   tasks:
-  - name: Get an existing Service object
-    kubernetes.core.k8s_info:
-      api_version: config.openshift.io/v1
-      kubeconfig: kubeconfig
-      kind: ClusterVersion
-      name: version
-      validate_certs: no
-    register: versions
+    - name: Get an existing Service object
+      kubernetes.core.k8s_info:
+        api_version: config.openshift.io/v1
+        kubeconfig: kubeconfig
+        kind: ClusterVersion
+        name: version
+        validate_certs: no
+      register: versions
 
     #  - name: Apply updates
     #  k8s:
@@ -37,6 +38,6 @@
     #    msg: "{{ upgrade_versions }}
 
 
-  - name: debug
-    debug:
-      msg: "{{ versions }}"
+    - name: debug
+      debug:
+        msg: "{{ versions }}"
