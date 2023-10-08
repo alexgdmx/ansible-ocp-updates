@@ -11,7 +11,11 @@
     - name: Get pass for admin
       ansible.builtin.include_vars:
         file: vars.yaml
-        name: admin_pass
+        name: cluster_admin_password
+
+    - name: debug pass
+      debug:
+        msg: cluster_admin_password
 
     - name: Log in (obtain access token)
       delegate_to: localhost

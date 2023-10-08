@@ -1,6 +1,13 @@
-2023-10-08T00:46:45.894212+00:00 INFO 'ansible_navigator.setup_logger' New ansible-navigator instance, logging initialized
-2023-10-08T00:46:45.894743+00:00 INFO 'ansible_navigator.setup_logger' New ansible-runner instance, logging initialized
-2023-10-08T00:46:45.894956+00:00 INFO 'ansible_navigator.main' EE support enabled: no 'ansible.cfg' found in current working directory. Tried /home/alex/ansible/ansible-ocp-updates/ansible.cfg
-2023-10-08T00:46:45.895222+00:00 INFO 'ansible_navigator.image_manager.puller._log_message' Image tag is: latest
-2023-10-08T00:46:50.776522+00:00 INFO 'ansible-runner.kill_container' Error from podman kill ansible_runner_1665551c-f3d7-47d2-ae1d-3daa6248e8e0 command:
-b'Error: no container with name or ID "ansible_runner_1665551c-f3d7-47d2-ae1d-3daa6248e8e0" found: no such container\n'
+2023-10-08T00:53:47.252900+00:00 INFO 'ansible_navigator.setup_logger' New ansible-navigator instance, logging initialized
+2023-10-08T00:53:47.253413+00:00 INFO 'ansible_navigator.setup_logger' New ansible-runner instance, logging initialized
+2023-10-08T00:53:47.253578+00:00 INFO 'ansible_navigator.main' EE support enabled: no 'ansible.cfg' found in current working directory. Tried /home/alex/ansible/ansible-ocp-updates/ansible.cfg
+2023-10-08T00:53:47.253813+00:00 INFO 'ansible_navigator.image_manager.puller._log_message' Image tag is: latest
+2023-10-08T00:53:47.672149+00:00 INFO 'ansible_navigator.actions.images._update_args' 'display_color' cannot be reconfigured. (restore original)
+2023-10-08T00:53:47.672587+00:00 INFO 'ansible_navigator.actions.images._update_args' 'mode' cannot be reconfigured. (restore original)
+2023-10-08T00:53:47.672766+00:00 INFO 'ansible_navigator.actions.images._update_args' 'display_color' cannot be reconfigured. (apply defaults)
+2023-10-08T00:53:47.672996+00:00 INFO 'ansible_navigator.actions.images._update_args' 'mode' cannot be reconfigured. (apply defaults)
+2023-10-08T00:53:47.673247+00:00 INFO 'ansible_navigator.actions.images._update_args' 'display_color' cannot be reconfigured (apply previous cli)
+2023-10-08T00:53:47.673404+00:00 INFO 'ansible_navigator.actions.images._update_args' 'mode' cannot be reconfigured (apply previous cli)
+2023-10-08T00:53:47.673560+00:00 INFO 'ansible_navigator.actions.images._update_args' EE support enabled: no 'ansible.cfg' found in current working directory. Tried /home/alex/ansible/ansible-ocp-updates/ansible.cfg
+2023-10-08T00:53:47.673730+00:00 INFO 'ansible_navigator.actions.images._update_args' 'display_color' cannot be reconfigured. (post process)
+2023-10-08T00:53:47.673982+00:00 INFO 'ansible_navigator.actions.images._update_args' 'mode' cannot be reconfigured. (post process)
