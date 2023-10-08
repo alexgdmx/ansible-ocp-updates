@@ -9,11 +9,13 @@
 
   tasks:
     - name: Get pass for admin
+      delegate_to: localhost
       ansible.builtin.include_vars:
         file: vars.yaml
         name: cluster_admin_password
 
     - name: debug pass
+      delegate_to: localhost
       debug:
         msg: "{{ cluster_admin_password }}"
 
@@ -26,6 +28,7 @@
       register: auth_result
 
     - name: debug result
+      delegate_to: localhost
       debug:
         msg: "{{ auth_result.openshift_auth.api_key }}"
       
@@ -41,5 +44,6 @@
       when: auth_result.openshift_auth.api_key is defined
      
     - name: Display available updates
+      delegate_to: localhost
       debug:
         msg: "{{ available_updates.resources[0].status.availableUpdates }}"
