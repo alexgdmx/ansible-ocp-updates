@@ -14,7 +14,7 @@
         name: admin_pass
 
     - name: Log in (obtain access token)
-      delegate: localhost
+      delegate_to: localhost
       redhat.openshift.openshift_auth:
         username: alex
         password: Pass123!
@@ -26,7 +26,7 @@
         msg: "{{ auth_result.openshift_auth.api_key }}"
       
     - name: Get available updates api_key
-      delegate: localhost
+      delegate_to: localhost
       kubernetes.core.k8s_info:
         kind: ClusterVersion
         api_version: config.openshift.io/v1
