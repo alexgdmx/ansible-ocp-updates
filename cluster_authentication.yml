@@ -12,18 +12,18 @@
       delegate_to: localhost
       ansible.builtin.include_vars:
         file: vars.yaml
-        name: cluster_admin_password
+        name: config
 
     - name: debug pass
       delegate_to: localhost
       debug:
-        msg: "{{ cluster_admin_password }}"
+        msg: "{{ config.cluster_admin_password }}"
 
     - name: Log in (obtain access token)
       delegate_to: localhost
       redhat.openshift.openshift_auth:
         username: alex
-        password: "{{ cluster_admin_password }}"
+        password: "{{ config.cluster_admin_password }}"
         validate_certs: no
       register: auth_result
 
