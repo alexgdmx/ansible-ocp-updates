@@ -1,1 +1,2 @@
-.sa-token.txt
+**/ansible-navigator.log
+**/*.json

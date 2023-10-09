@@ -1,6 +1,0 @@
-2023-10-08T01:02:39.258887+00:00 INFO 'ansible_navigator.setup_logger' New ansible-navigator instance, logging initialized
-2023-10-08T01:02:39.259407+00:00 INFO 'ansible_navigator.setup_logger' New ansible-runner instance, logging initialized
-2023-10-08T01:02:39.259552+00:00 INFO 'ansible_navigator.main' EE support enabled: no 'ansible.cfg' found in current working directory. Tried /home/alex/ansible/ansible-ocp-updates/ansible.cfg
-2023-10-08T01:02:39.259782+00:00 INFO 'ansible_navigator.image_manager.puller._log_message' Image tag is: latest
-2023-10-08T01:02:44.611775+00:00 INFO 'ansible-runner.kill_container' Error from podman kill ansible_runner_8bd926d4-f8b7-4906-bbde-430ded003c14 command:
-b'Error: no container with name or ID "ansible_runner_8bd926d4-f8b7-4906-bbde-430ded003c14" found: no such container\n'

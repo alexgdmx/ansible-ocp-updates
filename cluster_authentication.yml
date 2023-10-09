@@ -23,7 +23,7 @@
       delegate_to: localhost
       redhat.openshift.openshift_auth:
         username: alex
-        password: Pass123!
+        password: "{{ cluster_admin_password }}"
         validate_certs: no
       register: auth_result
 
