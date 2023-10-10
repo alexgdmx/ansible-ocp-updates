@@ -46,4 +46,4 @@
     - name: Display available updates
       delegate_to: localhost
       debug:
-        msg: "{{ available_updates.resources[0].status.availableUpdates | selectattr('channels', 'equalto', 'stable-4.13')}}"
+        msg: "{{ available_updates.resources[0].status.availableUpdates | selectattr('stable-4.13', 'in', channels )}}"
