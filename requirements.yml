@@ -1,4 +1,3 @@
 ---
 collections:
-- kubernetes.core
-
+  - name: community.general
