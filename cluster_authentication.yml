@@ -60,5 +60,7 @@
         namespace: openshift-config
         name: admin-acks
         patch:
-          data:
-            ack-4.13-kube-1.27-api-removals-in-4.14: true
+          - op: replace
+            path: /spec/data/ack-4.13-kube-1.27-api-removals-in-4.14
+            value: true
+          
