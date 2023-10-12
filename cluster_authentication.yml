@@ -6,6 +6,9 @@
   module_defaults:
     group/redhat.openshift.openshift:
       host: https://api.openshift.training:6443
+    group/kubernetes.core.k8s:
+      host: https://api.openshift.training:6443
+
 
   tasks:
     - name: Get pass for admin
@@ -53,14 +56,19 @@
       debug:
         msg: "{{ updates | json_query( \"availableUpdates[?contains(channels,'\" + channel + \"')].version\") }}"
 
-    - name: Apply multiple patch operations to an existing Pod
-      kubernetes.core.k8s_json_patch:
+    - name: patch admin ack for upgrade
+      delegate_to: localhost
+      kubernetes.core.k8s:
         api_version: v1
         kind: ConfigMap
         namespace: openshift-config
         name: admin-acks
-        patch:
-          - op: replace
-            path: /spec/data/ack-4.13-kube-1.27-api-removals-in-4.14
-            value: true
+        api_key: "{{ auth_result.openshift_auth.api_key }}"
+        validate_certs: no
+        state: patched
+        definition:
+          data:
+            ack-4.13-kube-1.27-api-removals-in-4.14: "true"
+      when: auth_result.openshift_auth.api_key is defined
+            
           
