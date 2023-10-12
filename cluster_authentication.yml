@@ -42,8 +42,23 @@
         validate_certs: false
       register: available_updates
       when: auth_result.openshift_auth.api_key is defined
-     
+
+    - name: Set fact current channel
+      ansible.builtin.set_fact:
+        channel: "{{ available_updates.resources[0].spec.channel }}"
+        updates: "{{ available_updates.resources[0].status }}"
+
     - name: Display available updates
       delegate_to: localhost
       debug:
-        msg: "{{ available_updates.resources[0].status | json_query( \"availableUpdates[?contains(channels,'\" + available_updates.resources[0].spec.channel + \"')].version\") }}"
+        msg: "{{ updates | json_query( \"availableUpdates[?contains(channels,'\" + channel + \"')].version\") }}"
+
+    - name: Apply multiple patch operations to an existing Pod
+      kubernetes.core.k8s_json_patch:
+        api_version: v1
+        kind: ConfigMap
+        namespace: openshift-config
+        name: admin-acks
+        patch:
+          data:
+            ack-4.13-kube-1.27-api-removals-in-4.14: true
