@@ -95,3 +95,59 @@
         - admin_ack == false
         - channel is search("4.13")
 
+    - name: Pausing Machine Healt Checks
+      delegate_to: localhost
+      kubernetes.core.k8s:
+        api_version: machine.openshift.io/v1beta1
+        kind: MachineHealthCheck
+        namespace: openshift-machine-api
+        name: machine-api-termination-handler
+        api_key: "{{ auth_result.openshift_auth.api_key }}"
+        validate_certs: no
+        state: patched
+        definition:
+          metadata:
+            annotations:
+              cluster.x-k8s.io/paused: ""
+
+    - name: Update cluster
+      delegate_to: localhost
+      kubernetes.core.k8s:
+        kind: ClusterVersion
+        api_version: config.openshift.io/v1
+        namespace: openshift-config
+        api_key: "{{ auth_result.openshift_auth.api_key }}"
+        validate_certs: false
+        wait: yes
+        wait_condition:
+          reason: PayloadLoaded
+          status: True
+          type: ReleaseAccepted
+        wait_sleep: 30
+        wait_timeout: 3600
+        definition:
+          spec:
+            desiredUpdate:
+              version: "{{ desired_version }}"
+      when: 
+        - auth_result.openshift_auth.api_key is defined
+        - desired_version is defined
+  
+    - name: Remove pause Machine Healt Checks
+      delegate_to: localhost
+      kubernetes.core.k8s:
+        api_version: machine.openshift.io/v1beta1
+        kind: MachineHealthCheck
+        namespace: openshift-machine-api
+        name: machine-api-termination-handler
+        api_key: "{{ auth_result.openshift_auth.api_key }}"
+        validate_certs: no
+        state: patched
+        definition:
+          metadata:
+            annotations:
+              cluster.x-k8s.io/paused: NULL
+
+
+
+
