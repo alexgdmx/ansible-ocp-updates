@@ -134,6 +134,25 @@
       debug:
         var: upgrade_result
 
+    - name: Waiting cluster
+      delegate_to: localhost
+      kubernetes.core.k8s_info:
+        kind: ClusterVersion
+        api_version: config.openshift.io/v1
+        name: version
+        api_key: "{{ auth_result.openshift_auth.api_key }}"
+        validate_certs: false
+        wait: yes
+        wait_condition:
+          reason: ClusterOperatorsUpdating
+          status: False
+          type: Progressing
+        wait_sleep: 30
+        wait_timeout: 7200
+      when: 
+        - auth_result.openshift_auth.api_key is defined
+        - desired_version is defined
+
     - name: Remove pause Machine Healt Checks
       delegate_to: localhost
       kubernetes.core.k8s:
