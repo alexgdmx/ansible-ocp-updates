@@ -125,6 +125,7 @@
           type: ReleaseAccepted
         wait_sleep: 30
         wait_timeout: 3600
+        state: patched
         definition:
           spec:
             desiredUpdate:
