@@ -35,10 +35,10 @@
       register: available_updates
       when: auth_result.openshift_auth.api_key is defined
 
-    - name: debug result
-      delegate_to: localhost
-      debug:
-        msg: "{{ available_updates }}"
+    # - name: debug result
+    #   delegate_to: localhost
+    #   debug:
+    #     msg: "{{ available_updates }}"
 
     - name: Set fact current channel
       ansible.builtin.set_fact:
@@ -53,11 +53,6 @@
     - name: Set fact Admin ack required
       ansible.builtin.set_fact:
         admin_ack: "{{ (updates | json_query( \"conditions[?reason=='AdminAckRequired'].status\") | join()) }}"
-
-    - name: Display available updates
-      delegate_to: localhost
-      debug:
-        msg: "{{ admin_ack }}"
 
     - name: patch admin ack for upgrade for 4.12
       delegate_to: localhost
@@ -130,10 +125,15 @@
           spec:
             desiredUpdate:
               version: "{{ desired_version }}"
+      register: upgrade_result
       when: 
         - auth_result.openshift_auth.api_key is defined
         - desired_version is defined
-  
+
+    - name: get result upgrade
+      debug:
+        var: upgrade_result
+
     - name: Remove pause Machine Healt Checks
       delegate_to: localhost
       kubernetes.core.k8s:
