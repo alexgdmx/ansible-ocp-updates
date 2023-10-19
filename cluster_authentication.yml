@@ -115,7 +115,7 @@
       kubernetes.core.k8s:
         kind: ClusterVersion
         api_version: config.openshift.io/v1
-        namespace: openshift-config
+        name: version
         api_key: "{{ auth_result.openshift_auth.api_key }}"
         validate_certs: false
         wait: yes
